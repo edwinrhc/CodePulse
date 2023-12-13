@@ -140,6 +140,7 @@ namespace Proyecto_Web.Controllers
                 UrlHandle = category.UrlHandle
 
             };
+
             return Ok(response);
 
         }
