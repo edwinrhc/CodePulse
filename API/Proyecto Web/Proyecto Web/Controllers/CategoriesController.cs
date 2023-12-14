@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Proyecto_Web.Data;
 using Proyecto_Web.Models.Domain;
-using Proyecto_Web.Models.DTO;
+using Proyecto_Web.Models.DTO.Category;
 using Proyecto_Web.Repositories.Interface;
 
 namespace Proyecto_Web.Controllers

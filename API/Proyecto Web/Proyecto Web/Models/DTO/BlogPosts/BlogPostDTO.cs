@@ -1,16 +1,15 @@
-﻿namespace Proyecto_Web.Models.Domain
+﻿namespace Proyecto_Web.Models.DTO.BlogPosts
 {
-    public class BlogPost
+    public class BlogPostDTO
     {
         public Guid Id { get; set; }
-
         public string Title { get; set; }
 
-        public string  ShortDescription { get; set; }
+        public string ShortDescription { get; set; }
 
         public string Contet { get; set; }
 
-        public string FeaturedImageUrl{ get; set; }
+        public string FeaturedImageUrl { get; set; }
 
         public string UrlHandle { get; set; }
 

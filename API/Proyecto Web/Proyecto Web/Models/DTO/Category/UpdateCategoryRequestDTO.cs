@@ -1,8 +1,7 @@
-﻿namespace Proyecto_Web.Models.DTO
+﻿namespace Proyecto_Web.Models.DTO.Category
 {
-    public class CategoryDto
+    public class UpdateCategoryRequestDTO
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string UrlHandle { get; set; }
     }
