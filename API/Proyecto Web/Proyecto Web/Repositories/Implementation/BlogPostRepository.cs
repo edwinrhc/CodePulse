@@ -10,13 +10,13 @@ namespace Proyecto_Web.Repositories.Implementation
 
         public BlogPostRepository(ApplicationDbContext dbContext)
         {
-            this.dbContext = dbContext; 
+            this.dbContext = dbContext;
         }
 
         public async Task<BlogPost> CreateAsync(BlogPost blogPost)
         {
-             await dbContext.BlogPosts.AddAsync(blogPost);
-             await dbContext.SaveChangesAsync();
+            await dbContext.BlogPosts.AddAsync(blogPost);
+            await dbContext.SaveChangesAsync();
             return blogPost;
         }
     }

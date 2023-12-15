@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Proyecto_Web.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using Proyecto_Web.Models.Domain;
 using Proyecto_Web.Models.DTO.Category;
 using Proyecto_Web.Repositories.Interface;
@@ -22,7 +20,7 @@ namespace Proyecto_Web.Controllers
 
         // 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryRequestDTO request) 
+        public async Task<IActionResult> CreateCategory(CreateCategoryRequestDTO request)
         {
             // Map DTO to Doman Model
             var category = new Category
@@ -44,14 +42,14 @@ namespace Proyecto_Web.Controllers
             return Ok(response);
 
 
-        
+
         }
 
 
         // GET: https://localhost:7171/api/categories
         [HttpGet]
         public async Task<IActionResult> GetAllCategories()
-        { 
+        {
             var categories = await categoryRepository.GetAllAsync();
 
             // Map Domain model to DTO
@@ -74,11 +72,12 @@ namespace Proyecto_Web.Controllers
         // GET: https://localthost:7171/api/categories/{id}
         [HttpGet]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> GetCategoryById([FromRoute] Guid id) 
+        public async Task<IActionResult> GetCategoryById([FromRoute] Guid id)
         {
             var existingCategory = await categoryRepository.GetById(id);
 
-            if (existingCategory is null) {
+            if (existingCategory is null)
+            {
                 return NotFound();
             }
 
@@ -89,14 +88,14 @@ namespace Proyecto_Web.Controllers
                 UrlHandle = existingCategory.UrlHandle
 
             };
-            return Ok(response);    
+            return Ok(response);
         }
 
 
         // PUT: https://localthost:7171/api/categories/{id}
         [HttpPut]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryRequestDTO request) 
+        public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryRequestDTO request)
         {
             // Convert DTO to Domain Model
             var category = new Category
@@ -108,7 +107,8 @@ namespace Proyecto_Web.Controllers
 
             category = await categoryRepository.UpdateAsync(category);
 
-            if (category == null) {
+            if (category == null)
+            {
 
                 return NotFound();
             }
@@ -129,10 +129,10 @@ namespace Proyecto_Web.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
         {
-            var category = await categoryRepository.DeleteAsync(id); 
+            var category = await categoryRepository.DeleteAsync(id);
 
-            if(category is null)
-               { return NotFound(); }
+            if (category is null)
+            { return NotFound(); }
             var response = new CategoryDto
             {
                 Id = category.Id,

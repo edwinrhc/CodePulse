@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Proyecto_Web.Models.Domain;
 using Proyecto_Web.Models.DTO.BlogPosts;
 using Proyecto_Web.Repositories.Interface;
@@ -18,13 +17,13 @@ namespace Proyecto_Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBlogPost([FromBody]CreateBlogPostRequestDTO requestDTO) 
+        public async Task<IActionResult> CreateBlogPost([FromBody] CreateBlogPostRequestDTO requestDTO)
         {
             // Convert DTO to Domain
             var blogPost = new BlogPost
             {
                 Author = requestDTO.Author,
-                Contet = requestDTO.Contet,
+                Content = requestDTO.Content,
                 FeaturedImageUrl = requestDTO.FeaturedImageUrl,
                 IsVisible = requestDTO.IsVisible,
                 PublishedDate = requestDTO.PublishedDate,
@@ -33,14 +32,14 @@ namespace Proyecto_Web.Controllers
                 UrlHandle = requestDTO.UrlHandle
             };
 
-            blogPost=   await blogPostRepostitory.CreateAsync(blogPost);
+            blogPost = await blogPostRepostitory.CreateAsync(blogPost);
 
             // Convert Domain Model back to DTO
             var response = new BlogPostDTO
             {
                 Id = blogPost.Id,
                 Author = blogPost.Author,
-                Contet = blogPost.Contet,
+                Content = blogPost.Content,
                 FeaturedImageUrl = blogPost.FeaturedImageUrl,
                 IsVisible = blogPost.IsVisible,
                 ShortDescription = blogPost.ShortDescription,

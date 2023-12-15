@@ -9,7 +9,8 @@ namespace Proyecto_Web.Repositories.Implementation
     {
         private readonly ApplicationDbContext dbContext;
 
-        public CategoryRepository(ApplicationDbContext dbContext) {
+        public CategoryRepository(ApplicationDbContext dbContext)
+        {
             this.dbContext = dbContext;
         }
 
@@ -24,9 +25,9 @@ namespace Proyecto_Web.Repositories.Implementation
 
         public async Task<Category?> DeleteAsync(Guid id)
         {
-           var existingCategory= await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
-            
-            if(existingCategory is null)
+            var existingCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (existingCategory is null)
             {
                 return null;
             }
@@ -37,7 +38,7 @@ namespace Proyecto_Web.Repositories.Implementation
 
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
-          return await dbContext.Categories.ToListAsync();
+            return await dbContext.Categories.ToListAsync();
         }
 
         public async Task<Category> GetById(Guid id)
@@ -48,7 +49,7 @@ namespace Proyecto_Web.Repositories.Implementation
 
         public async Task<Category> UpdateAsync(Category category)
         {
-          var existingCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
+            var existingCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
             if (existingCategory != null)
             {
                 dbContext.Entry(existingCategory).CurrentValues.SetValues(category);

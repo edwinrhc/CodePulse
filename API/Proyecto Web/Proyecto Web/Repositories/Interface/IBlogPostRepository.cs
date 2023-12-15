@@ -4,6 +4,6 @@ namespace Proyecto_Web.Repositories.Interface
 {
     public interface IBlogPostRepository
     {
-       Task<BlogPost> CreateAsync(BlogPost blogPost);
+        Task<BlogPost> CreateAsync(BlogPost blogPost);
     }
 }
