@@ -1,4 +1,5 @@
-﻿using Proyecto_Web.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Proyecto_Web.Data;
 using Proyecto_Web.Models.Domain;
 using Proyecto_Web.Repositories.Interface;
 
@@ -18,6 +19,11 @@ namespace Proyecto_Web.Repositories.Implementation
             await dbContext.BlogPosts.AddAsync(blogPost);
             await dbContext.SaveChangesAsync();
             return blogPost;
+        }
+
+        public async Task<IEnumerable<BlogPost>> GetAllAsync()
+        {
+            return await dbContext.BlogPosts.Include(x => x.Categories).ToListAsync();
         }
     }
 }

@@ -5,5 +5,7 @@ namespace Proyecto_Web.Repositories.Interface
     public interface IBlogPostRepository
     {
         Task<BlogPost> CreateAsync(BlogPost blogPost);
+
+        Task<IEnumerable<BlogPost>> GetAllAsync();
     }
 }

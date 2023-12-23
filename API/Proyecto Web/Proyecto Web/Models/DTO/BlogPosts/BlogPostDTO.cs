@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Proyecto_Web.Models.DTO.Category;
+using System.ComponentModel.DataAnnotations;
 
 namespace Proyecto_Web.Models.DTO.BlogPosts
 {
@@ -21,5 +22,7 @@ namespace Proyecto_Web.Models.DTO.BlogPosts
         public string Author { get; set; }
 
         public bool IsVisible { get; set; }
+
+        public List<CategoryDto> Categories { get; set; } = new List<CategoryDto>();
     }
 }
