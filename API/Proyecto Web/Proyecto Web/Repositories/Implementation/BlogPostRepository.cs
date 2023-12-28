@@ -25,5 +25,31 @@ namespace Proyecto_Web.Repositories.Implementation
         {
             return await dbContext.BlogPosts.Include(x => x.Categories).ToListAsync();
         }
+
+        public async Task<BlogPost?> GetByIdAsync(Guid id)
+        {
+          return await  dbContext.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<BlogPost> UpdateAsync(BlogPost blogPost)
+        {
+            var existingBloPost = await dbContext.BlogPosts.Include(x => x.Categories)
+                .FirstOrDefaultAsync(x => x.Id == blogPost.Id);
+
+            if(existingBloPost == null)
+            {
+                return null;
+            }
+
+            // Update BlogPost
+            dbContext.Entry(existingBloPost).CurrentValues.SetValues(blogPost);
+
+            // Update Categories
+            existingBloPost.Categories = blogPost.Categories;
+
+            await dbContext.SaveChangesAsync();
+
+            return blogPost;
+        }
     }
 }

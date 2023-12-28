@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using Microsoft.AspNetCore.Mvc;
 using Proyecto_Web.Models.Domain;
 using Proyecto_Web.Models.DTO.BlogPosts;
 using Proyecto_Web.Models.DTO.Category;
 using Proyecto_Web.Repositories.Interface;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Proyecto_Web.Controllers
 {
@@ -39,7 +41,7 @@ namespace Proyecto_Web.Controllers
             foreach (var categoriesGUId in requestDTO.Categories)
             {
                 var existingCategory = await categoryRepository.GetById(categoriesGUId);
-                if(existingCategory is not null)
+                if (existingCategory is not null)
                 {
                     blogPost.Categories.Add(existingCategory);
                 }
@@ -70,13 +72,13 @@ namespace Proyecto_Web.Controllers
 
         //GET: {apibaseurl}/api/blogposts
         [HttpGet]
-        public async Task<IActionResult> GetAllBlogPosts() 
+        public async Task<IActionResult> GetAllBlogPosts()
         {
-           var blogPosts = await blogPostRepostitory.GetAllAsync();
+            var blogPosts = await blogPostRepostitory.GetAllAsync();
 
             // Convert Domain model to DTO
             var response = new List<BlogPostDTO>();
-            foreach(var blogPost in blogPosts)
+            foreach (var blogPost in blogPosts)
             {
                 response.Add(new BlogPostDTO
                 {
@@ -100,6 +102,102 @@ namespace Proyecto_Web.Controllers
             return Ok(response);
         }
 
+
+
+        // GET: {apiBaseUrl}/api/blogposts/{id}
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetBlogPostByid([FromRoute] Guid id)
+        {
+            // Get the BlogPost from Repo
+            var blogPost = await blogPostRepostitory.GetByIdAsync(id);
+            if (blogPost is null)
+            {
+
+                return NotFound();
+            }
+            // Convert Domain Model to DTO
+            var response = new BlogPostDTO
+            {
+                Id = blogPost.Id,
+                Author = blogPost.Author,
+                Content = blogPost.Content,
+                FeaturedImageUrl = blogPost.FeaturedImageUrl,
+                IsVisible = blogPost.IsVisible,
+                ShortDescription = blogPost.ShortDescription,
+                Title = blogPost.Title,
+                UrlHandle = blogPost.UrlHandle,
+                Categories = blogPost.Categories.Select(x => new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UrlHandle = x.UrlHandle
+                }).ToList()
+            };
+            return Ok(response);
+        }
+
+        // PUT: {apibaseurl}/api/blogposts/{id}
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateBloPostById([FromRoute] Guid id, UpdateBlogPostRequestDto requestDTO)
+        {
+            // Convert DTO to Domain Model
+            var blogPost = new BlogPost
+            {
+                Id = id,
+                Author = requestDTO.Author,
+                Content = requestDTO.Content,
+                FeaturedImageUrl = requestDTO.FeaturedImageUrl,
+                IsVisible = requestDTO.IsVisible,
+                PublishedDate = requestDTO.PublishedDate,
+                ShortDescription = requestDTO.ShortDescription,
+                Title = requestDTO.Title,
+                UrlHandle = requestDTO.UrlHandle,
+                Categories = new List<Category>()
+            };
+
+            // Foreach 
+            foreach (var categoryGuid in requestDTO.Categories)
+            {
+             var existingCategory =   await categoryRepository.GetById(categoryGuid);
+                if(existingCategory != null)
+                {
+                    blogPost.Categories.Add(existingCategory);
+                }
+            }
+
+            // Call Repository To Update BlogPost Domain Model
+            var updateBlogPost =  await blogPostRepostitory.UpdateAsync(blogPost);
+
+            if (updateBlogPost == null) 
+            {
+                return NotFound();
+            }
+
+            // Convert Domain model back to DTO
+            var response = new BlogPostDTO
+            {
+                Id = blogPost.Id,
+                Author = blogPost.Author,
+                Content = blogPost.Content,
+                FeaturedImageUrl = blogPost.FeaturedImageUrl,
+                IsVisible = blogPost.IsVisible,
+                ShortDescription = blogPost.ShortDescription,
+                Title = blogPost.Title,
+                UrlHandle = blogPost.UrlHandle,
+                Categories = blogPost.Categories.Select(x => new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UrlHandle = x.UrlHandle
+                }).ToList()
+            };
+
+            return Ok(response);
+
+
+        }
 
     }
 

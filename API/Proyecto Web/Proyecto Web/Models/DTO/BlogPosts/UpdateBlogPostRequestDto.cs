@@ -2,7 +2,7 @@
 
 namespace Proyecto_Web.Models.DTO.BlogPosts
 {
-    public class CreateBlogPostRequestDTO
+    public class UpdateBlogPostRequestDto
     {
         public string Title { get; set; }
 
@@ -22,6 +22,6 @@ namespace Proyecto_Web.Models.DTO.BlogPosts
 
         public bool IsVisible { get; set; }
 
-        public Guid[]  Categories { get; set; }
+        public List<Guid> Categories { get; set; } = new List<Guid>();
     }
 }

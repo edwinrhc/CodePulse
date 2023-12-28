@@ -17,6 +17,7 @@ namespace Proyecto_Web.Models.Domain
         public string UrlHandle { get; set; }
 
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime PublishedDate { get; set; }
 
         public string Author { get; set; }
