@@ -17,6 +17,34 @@ namespace Proyecto_Web.Controllers
             this.imageRepository = imageRepository;
         }
 
+        // GET: {apibaseurl}/api/images
+        [HttpGet]
+        public async Task<IActionResult> GetAllImages()
+        {
+            // call image repository to get all images
+            var images = await imageRepository.GetAll();
+
+            // Convert Domain model to DTO
+            var response = new List<BlogImageDTO>();
+            foreach (var image in images)
+            {
+                response.Add(new BlogImageDTO
+                {
+                    Id = image.Id,
+                    Title = image.Title,
+                    DateCreated = image.DateCreated,
+                    FileExtension = image.FileExtension,
+                    Filename = image.Filename,
+                    Url = image.Url
+                });
+            }
+
+            return Ok(response);
+
+        }
+
+
+
         // POST: {apibaseurl}/api/images
         [HttpPost]
         public async Task<IActionResult> UploadImage([FromForm] IFormFile file,
