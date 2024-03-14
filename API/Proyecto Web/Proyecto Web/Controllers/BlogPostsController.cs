@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Proyecto_Web.Models.Domain;
 using Proyecto_Web.Models.DTO.BlogPosts;
@@ -22,6 +23,7 @@ namespace Proyecto_Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateBlogPost([FromBody] CreateBlogPostRequestDTO requestDTO)
         {
             // Convert DTO to Domain
@@ -176,6 +178,7 @@ namespace Proyecto_Web.Controllers
         // PUT: {apibaseurl}/api/blogposts/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateBloPostById([FromRoute] Guid id, UpdateBlogPostRequestDto requestDTO)
         {
             // Convert DTO to Domain Model
@@ -236,6 +239,7 @@ namespace Proyecto_Web.Controllers
         // Delete: {apibaseurl}/api/blogposts/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteBlogPost([FromRoute] Guid id)
         {
             var deletedBlogPost = await blogPostRepostitory.DeleteAsync(id);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Proyecto_Web.Models.Domain;
 using Proyecto_Web.Models.DTO.Category;
 using Proyecto_Web.Repositories.Interface;
@@ -20,6 +21,7 @@ namespace Proyecto_Web.Controllers
 
         // 
         [HttpPost]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateCategory(CreateCategoryRequestDTO request)
         {
             // Map DTO to Doman Model
@@ -63,7 +65,6 @@ namespace Proyecto_Web.Controllers
                     UrlHandle = category.UrlHandle
                 });
             }
-
             return Ok(response);
         }
 
@@ -95,6 +96,7 @@ namespace Proyecto_Web.Controllers
         // PUT: https://localthost:7171/api/categories/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryRequestDTO request)
         {
             // Convert DTO to Domain Model
@@ -127,6 +129,7 @@ namespace Proyecto_Web.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
         {
             var category = await categoryRepository.DeleteAsync(id);
@@ -144,5 +147,8 @@ namespace Proyecto_Web.Controllers
             return Ok(response);
 
         }
+
+
+
     }
 }
