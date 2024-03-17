@@ -29,4 +29,4 @@ La arquitectura de la aplicación se basará en el patrón cliente-servidor, don
 
 ## Descripción General
 
-Este proyecto te permitirá construir una aplicación web completa, desde la creación de la interfaz de usuario con Angular hasta la implementación del backend con ASP.NET Core Web API. Aprenderás a realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en la base de datos, implementar autenticación y autorización para proteger los recursos y mucho más.
+Este proyecto te permitirá construir una aplicación web completa, desde la creación de la interfaz de usuario con Angular hasta la implementación del backend con ASP.NET Core Web API.Realizaremos operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en la base de datos, implementar autenticación y autorización para proteger los recursos y mucho más.
