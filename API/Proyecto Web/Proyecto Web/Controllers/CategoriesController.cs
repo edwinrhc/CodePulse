@@ -21,7 +21,7 @@ namespace Proyecto_Web.Controllers
 
         // 
         [HttpPost]
-        [Authorize(Roles = "Writer")]
+       // [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateCategory(CreateCategoryRequestDTO request)
         {
             // Map DTO to Doman Model
@@ -48,11 +48,11 @@ namespace Proyecto_Web.Controllers
         }
 
 
-        // GET: https://localhost:7171/api/categories
+        // GET: https://localhost:7171/api/categories?query=html
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAllCategories([FromQuery] string? query)
         {
-            var categories = await categoryRepository.GetAllAsync();
+            var categories = await categoryRepository.GetAllAsync(query);
 
             // Map Domain model to DTO
             var response = new List<CategoryDto>();
