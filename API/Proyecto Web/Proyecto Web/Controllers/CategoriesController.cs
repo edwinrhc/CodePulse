@@ -48,11 +48,13 @@ namespace Proyecto_Web.Controllers
         }
 
 
-        // GET: https://localhost:7171/api/categories?query=html
+        // GET: https://localhost:7171/api/categories?query=html&sortBy=name&sortDiretion=desc
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories([FromQuery] string? query)
+        public async Task<IActionResult> GetAllCategories(  [FromQuery] string? query, 
+                                                            [FromQuery] string? sortBy, 
+                                                            [FromQuery] string? sortDirection)
         {
-            var categories = await categoryRepository.GetAllAsync(query);
+            var categories = await categoryRepository.GetAllAsync(query,sortBy,sortDirection);
 
             // Map Domain model to DTO
             var response = new List<CategoryDto>();
