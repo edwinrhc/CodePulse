@@ -92,6 +92,10 @@ namespace Proyecto_Web.Repositories.Implementation
             return await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<int> GetCount()
+        {
+            return await dbContext.Categories.CountAsync();
+        }
 
         public async Task<Category> UpdateAsync(Category category)
         {
